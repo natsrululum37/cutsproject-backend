@@ -1,0 +1,63 @@
+{
+  "name": "cutsproject-backend",
+  "version": "1.0.0",
+  "description": "Backend API for CutsProject with Express and Prisma",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
+    "dev:watch": "nodemon --watch src --watch routes --watch controllers --ext js,json src/index.js",
+    "build": "echo 'No build step required for Node.js ES modules'",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "db:migrate": "prisma migrate dev",
+    "db:generate": "prisma generate",
+    "db:seed": "node prisma/seed.js",
+    "db:studio": "prisma studio",
+    "db:reset": "prisma migrate reset",
+    "db:push": "prisma db push",
+    "db:pull": "prisma db pull",
+    "lint": "echo 'ESLint not configured'",
+    "format": "echo 'Prettier not configured'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/natsrululum37/cutsproject-backend.git"
+  },
+  "keywords": [
+    "express",
+    "nodejs",
+    "prisma",
+    "api",
+    "backend",
+    "es-modules"
+  ],
+  "author": "natsrululum37",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/natsrululum37/cutsproject-backend/issues"
+  },
+  "homepage": "https://github.com/natsrululum37/cutsproject-backend#readme",
+  "dependencies": {
+    "@prisma/client": "^5.10.2",
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.18.2",
+    "express-rate-limit": "^7.1.5",
+    "express-validator": "^7.0.1",
+    "helmet": "^7.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0",
+    "prisma": "^5.10.2"
+  },
+  "prisma": {
+    "seed": "node prisma/seed.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
