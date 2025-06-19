@@ -11,12 +11,13 @@ import serviceRoutes from './routes/serviceRoutes.js';
 import galleryRoutes from './routes/galleryRoutes.js';
 import reviewRoutes from './routes/reviewRoutes.js';
 import bookingRoutes from './routes/bookingRoutes.js';
+import authRoutes from './routes/authRoutes.js';
 
 // Middleware
 import errorHandler from './middleware/errorHandler.js';
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3000;
 const prisma = new PrismaClient();
 
 // Rate limiting
@@ -107,6 +108,7 @@ app.use('/api/services', serviceRoutes);
 app.use('/api/gallery', galleryRoutes);
 app.use('/api/reviews', reviewRoutes);
 app.use('/api/bookings', bookingRoutes);
+app.use('/api/auth', authRoutes);
 
 // 404 handler for undefined routes
 app.use('*', (req, res) => {

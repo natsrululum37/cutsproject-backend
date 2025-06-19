@@ -51,6 +51,17 @@ model Booking {
   updatedAt DateTime @updatedAt
 }
 
+model User {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String   @unique
+  password  String
+  role      String   @default("user") // bisa 'admin' atau 'user'
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+
 enum BookingStatus {
   PENDING
   CONFIRMED
