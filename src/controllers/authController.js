@@ -70,3 +70,32 @@ export const login = async (req, res) => {
     res.status(500).json({ message: 'Terjadi kesalahan saat login' });
   }
 };
+
+// Middleware untuk verifikasi token dan ambil userId
+export const authenticate = (req, res, next) => {
+  const authHeader = req.headers.authorization;
+  if (!authHeader) return res.status(401).json({ message: 'Token tidak ditemukan' });
+
+  const token = authHeader.split(' ')[1];
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    req.userId = decoded.userId;
+    next();
+  } catch (err) {
+    return res.status(401).json({ message: 'Token tidak valid' });
+  }
+};
+
+// Endpoint untuk profile
+export const getProfile = async (req, res) => {
+  try {
+    const user = await prisma.user.findUnique({
+      where: { id: req.userId },
+      select: { id: true, name: true, email: true, role: true }
+    });
+    if (!user) return res.status(404).json({ message: 'User tidak ditemukan' });
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ message: 'Gagal mengambil data profile' });
+  }
+};
