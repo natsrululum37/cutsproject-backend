@@ -1,8 +1,10 @@
 import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
+import bcrypt from 'bcryptjs';
 
 async function main() {
   console.log('✨ Starting seeding...');
+  const hashedPassword = await bcrypt.hash('password123', 10);
 
   const services = [
     // Layanan Umum
@@ -103,6 +105,49 @@ async function main() {
     { name: 'Mike Smith', rating: 4, comment: 'Really happy with my new haircut!' },
     { name: 'David Wilson', rating: 5, comment: 'Best barbershop in town! Highly recommended.' },
   ];
+
+  const users = [
+    {
+      name: 'Admin Satu',
+      email: 'admin1@cutsproject.com',
+      password: hashedPassword,
+      role: 'admin',
+    },
+    {
+      name: 'Admin Dua',
+      email: 'admin2@cutsproject.com',
+      password: hashedPassword,
+      role: 'admin',
+    },
+    {
+      name: 'User Satu',
+      email: 'user1@cutsproject.com',
+      password: hashedPassword,
+      role: 'user',
+    },
+    {
+      name: 'User Dua',
+      email: 'user2@cutsproject.com',
+      password: hashedPassword,
+      role: 'user',
+    },
+    {
+      name: 'User Tiga',
+      email: 'user3@cutsproject.com',
+      password: hashedPassword,
+      role: 'user',
+    },
+  ];
+
+  for (const user of users) {
+    await prisma.user.upsert({
+      where: { email: user.email },
+      update: {},
+      create: user,
+    });
+  }
+
+  console.log('👉 Seeding users...');
 
   // Batch seeding with createMany where possible
   console.log('👉 Seeding services...');
