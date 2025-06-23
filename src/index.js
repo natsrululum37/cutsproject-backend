@@ -18,6 +18,7 @@ import adminRoutes from './routes/adminRoutes.js';
 import userRoutes from './routes/userRoutes.js'; 
 import adminBookingRoutes from './routes/adminBookingRoutes.js';
 import adminProfileRoutes from './routes/adminProfileRoutes.js';
+import adminReviewRoutes from './routes/adminReviewRoutes.js';
 
 // Middleware
 import errorHandler from './middleware/errorHandler.js';
@@ -121,6 +122,7 @@ app.use('/api/admins', adminRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/admin/reservations', adminBookingRoutes);
 app.use('/api/admin', adminProfileRoutes);
+app.use('/api/admin/reviews', adminReviewRoutes);
 
 // 404 handler for undefined routes
 app.use('*', (req, res) => {

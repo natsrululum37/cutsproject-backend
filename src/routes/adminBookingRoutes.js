@@ -6,6 +6,7 @@ import {
 } from '../controllers/adminBookingController.js';
 // import { authenticate } from '../controllers/authController.js';
 
+// Belum ada autentikasi dan role middleware
 const router = express.Router();
 
 // GET all reservations with pagination
