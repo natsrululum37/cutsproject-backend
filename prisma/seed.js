@@ -14,7 +14,7 @@ async function main() {
       price: 50000,
       category: 'Layanan Umum',
       duration: 45,
-      image_url: 'https://i.pinimg.com/736x/21/28/90/212890306280060a7431acd99d11cc37.jpg'
+      image_url: 'https://iili.io/FIiCUZP.jpg'
     },
     {
       name: 'Shaving',
@@ -22,7 +22,7 @@ async function main() {
       price: 5000,
       category: 'Layanan Umum',
       duration: 20,
-      image_url: 'https://i.pinimg.com/736x/21/28/90/212890306280060a7431acd99d11cc37.jpg'
+      image_url: 'https://iili.io/FIiCrn1.jpg'
     },
     {
       name: 'Treatments',
@@ -30,7 +30,7 @@ async function main() {
       price: 20000,
       category: 'Layanan Umum',
       duration: 30,
-      image_url: 'https://i.pinimg.com/736x/21/28/90/212890306280060a7431acd99d11cc37.jpg'
+      image_url: 'https://iili.io/FIiCGu2.jpg'
     },
     // Pro & Pewarnaan
     {
@@ -39,7 +39,7 @@ async function main() {
       price: 205000,
       category: 'Layanan Pro & Pewarnaan',
       duration: 180,
-      image_url: 'https://i.pinimg.com/736x/21/28/90/212890306280060a7431acd99d11cc37.jpg'
+      image_url: 'https://iili.io/FIiChGe.jpg'
     },
     {
       name: 'Paket Coloring',
@@ -47,7 +47,7 @@ async function main() {
       price: 188000,
       category: 'Layanan Pro & Pewarnaan',
       duration: 120,
-      image_url: 'https://i.pinimg.com/736x/21/28/90/212890306280060a7431acd99d11cc37.jpg'
+      image_url: 'https://iili.io/FIiCOaj.jpg'
     },
     {
       name: 'Top Perming',
@@ -55,7 +55,7 @@ async function main() {
       price: 196000,
       category: 'Layanan Pro & Pewarnaan',
       duration: 150,
-      image_url: 'https://i.pinimg.com/736x/21/28/90/212890306280060a7431acd99d11cc37.jpg'
+      image_url: 'https://iili.io/FIiC8uV.jpg'
     },
     // Produk Styling
     {
@@ -64,7 +64,7 @@ async function main() {
       price: 30000,
       category: 'Perawatan & Produk Styling Rambut',
       duration: 0,
-      image_url: 'https://i.pinimg.com/736x/21/28/90/212890306280060a7431acd99d11cc37.jpg'
+      image_url: 'https://iili.io/FIiCMjS.jpg'
     },
     {
       name: 'Shampoo',
@@ -72,7 +72,7 @@ async function main() {
       price: 25000,
       category: 'Perawatan & Produk Styling Rambut',
       duration: 0,
-      image_url: 'https://i.pinimg.com/736x/21/28/90/212890306280060a7431acd99d11cc37.jpg'
+      image_url: 'https://iili.io/FIiC66g.md.jpg'
     },
     // Premium
     {
@@ -81,7 +81,7 @@ async function main() {
       price: 250000,
       category: 'Layanan Premium',
       duration: 120,
-      image_url: 'https://i.pinimg.com/736x/21/28/90/212890306280060a7431acd99d11cc37.jpg'
+      image_url: 'https://iili.io/FIiCVZ7.jpg'
     },
     {
       name: 'Kids Haircut',
@@ -89,15 +89,20 @@ async function main() {
       price: 35000,
       category: 'Layanan Premium',
       duration: 45,
-      image_url: 'https://i.pinimg.com/736x/21/28/90/212890306280060a7431acd99d11cc37.jpg'
+      image_url: 'https://iili.io/FIiCSwB.jpg'
     },
   ];
 
   const gallery = [
-    { title: 'Classic Cut', image: 'gallery1.webp' },
-    { title: 'Modern Style', image: 'gallery2.webp' },
-    { title: 'Trending Look', image: 'gallery3.webp' },
-    { title: 'Premium Service', image: 'gallery4.webp' },
+    { title: 'Classic Taper', image: 'https://iili.io/FILOSY7.webp' },
+    { title: 'Textured Crop', image: 'https://iili.io/FILOUv9.md.webp' },
+    { title: 'Vintage Cut', image: 'https://iili.io/FILOgpe.webp' },
+    { title: 'Messy Textured', image: 'https://iili.io/FILOPQj.webp' },
+    { title: 'Classic Fade', image: 'https://iili.io/FILOLEQ.webp' },
+    { title: 'Slick Back Style', image: 'https://iili.io/FILOQ4V.webp' },
+    { title: 'Modern Pompadour', image: 'https://iili.io/FILODYP.webp' },
+    { title: 'Clean Fade', image: 'https://iili.io/FILObv1.webp' },
+    { title: 'Modern Quiff', image: 'https://iili.io/FILeHZJ.webp' },
   ];
 
   const reviews = [
