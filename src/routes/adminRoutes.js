@@ -1,7 +1,6 @@
 import express from 'express';
 import { authenticate } from '../controllers/authController.js';
 import { authorizeRole } from '../middleware/roleMiddleware.js';
-import { updateAdminProfile, logout } from '../controllers/updateProfileAdminController.js';
 
 import {
   getAllAdmins,
@@ -15,8 +14,10 @@ const router = express.Router();
 
 router.use(authenticate, authorizeRole('admin'));
 
-router.put('/profile', updateAdminProfile);
-router.post('/logout', logout);
+// Hapus route duplicate
+// router.put('/profile', updateAdminProfile); 
+// router.post('/logout', logout);
+
 router.get('/', getAllAdmins);
 router.post('/', createAdmin);
 router.put('/:id', updateAdmin);
