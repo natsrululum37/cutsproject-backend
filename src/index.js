@@ -1,3 +1,5 @@
+process.env.TZ = 'Asia/Jakarta';
+
 import 'dotenv/config'; // Better way to load dotenv for ES modules
 import express from 'express';
 import cors from 'cors';
@@ -14,6 +16,7 @@ import bookingRoutes from './routes/bookingRoutes.js';
 import authRoutes from './routes/authRoutes.js';
 import adminRoutes from './routes/adminRoutes.js';
 import userRoutes from './routes/userRoutes.js'; 
+import adminBookingRoutes from './routes/adminBookingRoutes.js';
 import adminProfileRoutes from './routes/adminProfileRoutes.js';
 
 // Middleware
@@ -22,6 +25,8 @@ import errorHandler from './middleware/errorHandler.js';
 const app = express();
 const PORT = process.env.PORT || 3000;
 const prisma = new PrismaClient();
+
+app.set('trust proxy', 1); 
 
 // Rate limiting
 const limiter = rateLimit({
@@ -114,6 +119,7 @@ app.use('/api/bookings', bookingRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/admins', adminRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/admin/reservations', adminBookingRoutes);
 app.use('/api/admin', adminProfileRoutes);
 
 // 404 handler for undefined routes
