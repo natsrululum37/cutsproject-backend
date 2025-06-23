@@ -42,17 +42,18 @@ model Review {
 }
 
 model Booking {
-  id        Int           @id @default(autoincrement())
-  name      String
-  phone     String
-  date      DateTime
-  time      String
-  notes     String?       // optional
-  status    BookingStatus @default(PENDING)
-  service   Service       @relation(fields: [serviceId], references: [id])
-  serviceId Int
-  createdAt DateTime      @default(now())
-  updatedAt DateTime      @updatedAt
+  id           Int           @id @default(autoincrement())
+  name         String
+  phone        String
+  date         DateTime
+  time         String
+  notes        String?       // optional
+  status       BookingStatus @default(PENDING)
+  cancelReason String?       
+  service      Service       @relation(fields: [serviceId], references: [id])
+  serviceId    Int
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
 }
 
 model User {
