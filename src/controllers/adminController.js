@@ -71,3 +71,55 @@ export const deleteAdmin = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+export const getDashboardStats = async (req, res) => {
+  try {
+    // Total reservasi
+    const totalBooking = await prisma.booking.count();
+
+    // Total layanan (tanpa filter status)
+    const totalActiveServices = await prisma.service.count();
+
+    // Total testimoni
+    const totalReviews = await prisma.review.count();
+
+    // Statistik reservasi per bulan (6 bulan terakhir)
+    const now = new Date();
+    const months = [];
+    const labels = [];
+    for (let i = 5; i >= 0; i--) {
+      const date = new Date(now.getFullYear(), now.getMonth() - i, 1);
+      months.push(date);
+      labels.push(date.toLocaleString('default', { month: 'short', year: 'numeric' }));
+    }
+
+    // Ambil data booking per bulan
+    const bookingsPerMonth = await Promise.all(
+      months.map(async (date, idx) => {
+        const start = new Date(date.getFullYear(), date.getMonth(), 1);
+        const end = new Date(date.getFullYear(), date.getMonth() + 1, 1);
+        const count = await prisma.booking.count({
+          where: {
+            date: {
+              gte: start,
+              lt: end
+            }
+          }
+        });
+        return count;
+      })
+    );
+
+    res.json({
+      totalBooking,
+      totalActiveServices,
+      totalReviews,
+      chart: {
+        labels,
+        data: bookingsPerMonth
+      }
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
