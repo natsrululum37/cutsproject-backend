@@ -5,9 +5,8 @@ const prisma = new PrismaClient();
 export const getAllReviews = async (req, res) => {
   try {
     const reviews = await prisma.review.findMany({
-      orderBy: {
-        createdAt: 'desc'
-      }
+      orderBy: { createdAt: 'desc' },
+      include: { service: true } // agar bisa tampil nama layanan jika perlu
     });
     res.json(reviews);
   } catch (error) {
@@ -20,7 +19,8 @@ export const getReviewById = async (req, res) => {
   try {
     const { id } = req.params;
     const review = await prisma.review.findUnique({
-      where: { id: parseInt(id) }
+      where: { id: parseInt(id) },
+      include: { service: true }
     });
 
     if (!review) {
@@ -36,13 +36,19 @@ export const getReviewById = async (req, res) => {
 // Create new review
 export const createReview = async (req, res) => {
   try {
-    const { name, rating, comment } = req.body;
+    const { name, avatar, rating, comment, serviceId } = req.body;
+
+    if (!name || !rating || !comment || !serviceId) {
+      return res.status(400).json({ error: 'Field required: name, rating, comment, serviceId' });
+    }
 
     const review = await prisma.review.create({
       data: {
         name,
-        rating,
-        comment
+        avatar: avatar || null,
+        rating: parseInt(rating),
+        comment,
+        serviceId: parseInt(serviceId)
       }
     });
 

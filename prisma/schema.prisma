@@ -18,6 +18,7 @@ model Service {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   bookings    Booking[]
+  reviews     Review[] 
 }
 
 model Gallery {
@@ -31,24 +32,27 @@ model Gallery {
 model Review {
   id        Int      @id @default(autoincrement())
   name      String
+  avatar    String?  // optional
   rating    Int      @db.TinyInt
   comment   String   @db.Text
+  service   Service  @relation(fields: [serviceId], references: [id])
+  serviceId Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
 model Booking {
-  id        Int      @id @default(autoincrement())
+  id        Int           @id @default(autoincrement())
   name      String
-  email     String
   phone     String
   date      DateTime
   time      String
-  serviceId Int
+  notes     String?       // optional
   status    BookingStatus @default(PENDING)
-  service   Service   @relation(fields: [serviceId], references: [id])
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  service   Service       @relation(fields: [serviceId], references: [id])
+  serviceId Int
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
 }
 
 model User {

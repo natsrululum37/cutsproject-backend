@@ -4,16 +4,16 @@ const prisma = new PrismaClient();
 // Create new booking
 export const createBooking = async (req, res) => {
   try {
-    const { name, email, phone, date, time, serviceId } = req.body;
+    const { name, phone, date, time, serviceId, notes } = req.body;
 
     const booking = await prisma.booking.create({
       data: {
         name,
-        email,
         phone,
         date: new Date(date),
         time,
         serviceId: parseInt(serviceId),
+        notes: notes || null,
         status: 'PENDING'
       },
       include: {

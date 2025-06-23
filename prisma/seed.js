@@ -101,9 +101,9 @@ async function main() {
   ];
 
   const reviews = [
-    { name: 'John Doe', rating: 5, comment: 'Great service and very professional staff!' },
-    { name: 'Mike Smith', rating: 4, comment: 'Really happy with my new haircut!' },
-    { name: 'David Wilson', rating: 5, comment: 'Best barbershop in town! Highly recommended.' },
+    { name: 'John Doe', rating: 5, comment: 'Great service and very professional staff!', serviceId: 1, avatar: 'https://i.pravatar.cc/150?img=1'},
+    { name: 'Mike Smith', rating: 4, comment: 'Really happy with my new haircut!', serviceId: 2, avatar: 'https://i.pravatar.cc/150?img=1' },
+    { name: 'David Wilson', rating: 5, comment: 'Best barbershop in town! Highly recommended.', serviceId: 3,  avatar: 'https://i.pravatar.cc/150?img=1' },
   ];
 
   const users = [
