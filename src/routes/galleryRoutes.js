@@ -1,12 +1,28 @@
 import express from 'express';
-import { getAllGalleryItems, getGalleryItemById } from '../controllers/galleryController.js';
+import { 
+  getAllGalleryItems, 
+  getGalleryItemById,
+  createGalleryItem,
+  updateGalleryItem,
+  deleteGalleryItem
+} from '../controllers/galleryController.js';
+// import { authenticate, isAdmin } from '../controllers/authController.js';
 
 const router = express.Router();
 
-// Get all gallery items
+// Routes for both admin and user
 router.get('/', getAllGalleryItems);
-
-// Get gallery item by ID
 router.get('/:id', getGalleryItemById);
+
+// Routes for admin only
+// Uncomment ketika middleware authenticate sudah siap
+// router.post('/', authenticate, isAdmin, createGalleryItem);
+// router.put('/:id', authenticate, isAdmin, updateGalleryItem);
+// router.delete('/:id', authenticate, isAdmin, deleteGalleryItem);
+
+// Gunakan ini untuk sementara (tanpa auth)
+router.post('/', createGalleryItem);
+router.put('/:id', updateGalleryItem);
+router.delete('/:id', deleteGalleryItem);
 
 export default router;
