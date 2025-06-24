@@ -76,3 +76,15 @@ enum BookingStatus {
   CANCELLED
   COMPLETED
 }
+
+model Team {
+  id        Int      @id @default(autoincrement())
+  nama      String
+  nim       String
+  peran     String
+  tugas     String
+  github    String
+  image     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
