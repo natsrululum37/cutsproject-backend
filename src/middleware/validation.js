@@ -2,14 +2,36 @@ import { body, validationResult } from "express-validator";
 
 // Validation rules for service
 export const validateService = [
-  body("name").trim().notEmpty().withMessage("Service name is required"),
-  body("description").trim().notEmpty().withMessage("Description is required"),
+  body("name")
+    .notEmpty()
+    .withMessage("Nama layanan wajib diisi")
+    .isLength({ min: 3, max: 100 })
+    .withMessage("Nama layanan harus antara 3-100 karakter"),
+
   body("price")
+    .notEmpty()
+    .withMessage("Harga layanan wajib diisi")
     .isFloat({ min: 0 })
-    .withMessage("Price must be a positive number"),
+    .withMessage("Harga harus berupa angka positif"),
+
+  body("description")
+    .notEmpty()
+    .withMessage("Deskripsi layanan wajib diisi")
+    .isLength({ min: 10 })
+    .withMessage("Deskripsi minimal 10 karakter"),
+
   body("duration")
+    .notEmpty()
+    .withMessage("Durasi layanan wajib diisi")
     .isInt({ min: 1 })
-    .withMessage("Duration must be a positive number"),
+    .withMessage("Durasi harus berupa angka positif dalam menit"),
+
+  body("category").notEmpty().withMessage("Kategori layanan wajib diisi"),
+
+  body("image_url")
+    .optional()
+    .isURL()
+    .withMessage("URL gambar tidak valid"),
 ];
 
 // Validation rules for booking
