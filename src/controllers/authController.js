@@ -9,6 +9,7 @@ const prisma = new PrismaClient();
 // REGISTER
 export const register = async (req, res) => {
   const { name, email, password } = req.body;
+  const photo = req.file ? req.file.filename : null;
 
   if (!name || !email || !password) {
     return res.status(400).json({ message: 'Semua field wajib diisi' });
@@ -22,15 +23,17 @@ export const register = async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    await prisma.user.create({
+    const user = await prisma.user.create({
       data: {
         name,
         email,
         password: hashedPassword,
+        photo, 
       },
+      select: { id: true, name: true, email: true, photo: true }
     });
 
-    res.status(201).json({ message: 'Registrasi berhasil' });
+    res.status(201).json({ message: 'Registrasi berhasil', user });
   } catch (error) {
     console.error('❌ Error saat registrasi:', error);
     res.status(500).json({ message: 'Terjadi kesalahan saat mendaftar.' });
@@ -94,10 +97,15 @@ export const getProfile = async (req, res) => {
   try {
     const user = await prisma.user.findUnique({
       where: { id: req.userId },
-      select: { id: true, name: true, email: true, role: true }
+      select: { id: true, name: true, email: true, role: true, photo: true }
     });
     if (!user) return res.status(404).json({ message: 'User tidak ditemukan' });
-    res.json(user);
+
+    const photoUrl = user.photo
+      ? `${process.env.BACKEND_URL || 'http://localhost:3000'}/uploads/profileUsers/${user.photo}`
+      : null;
+
+    res.json({ ...user, photo: photoUrl });
   } catch (error) {
     res.status(500).json({ message: 'Gagal mengambil data profile' });
   }

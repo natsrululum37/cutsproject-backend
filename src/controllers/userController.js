@@ -64,15 +64,16 @@ export const getProfile = async (req, res) => {
 
 export const updateProfile = async (req, res) => {
   try {
-    const userId = req.userId; // dari middleware authenticate
-    const { name, email, photo, phone } = req.body;
+    const userId = req.userId;
+    const { name, email, phone } = req.body;
+    const photo = req.file ? req.file.filename : undefined; 
 
-    // Validasi semua field wajib diisi
-    if (!name || !email || !photo || !phone) {
+    // Validasi field wajib diisi (kecuali photo opsional)
+    if (!name || !email || !phone) {
       return res.status(400).json({ error: 'Semua field wajib diisi.' });
     }
 
-    // Cek email unik (tidak boleh sama dengan user lain)
+    // Cek email unik
     const exist = await prisma.user.findFirst({
       where: {
         email,
@@ -83,10 +84,14 @@ export const updateProfile = async (req, res) => {
       return res.status(400).json({ error: 'Email sudah digunakan oleh user lain.' });
     }
 
+    // Data update
+    const dataUpdate = { name, email, phone };
+    if (photo) dataUpdate.photo = photo;
+
     // Update user
     const updatedUser = await prisma.user.update({
       where: { id: userId },
-      data: { name, email, photo },
+      data: dataUpdate,
       select: {
         id: true,
         name: true,
@@ -99,27 +104,12 @@ export const updateProfile = async (req, res) => {
       }
     });
 
-    await prisma.user.update({
-      where: { id: userId },
-      data: { phone }
-    });
+    // Kirim photo sebagai URL lengkap
+    const photoUrl = updatedUser.photo
+      ? `${process.env.BACKEND_URL || 'http://localhost:3000'}/uploads/profileUsers/${updatedUser.photo}`
+      : null;
 
-    // Ambil data terbaru
-    const user = await prisma.user.findUnique({
-      where: { id: userId },
-      select: {
-        id: true,
-        name: true,
-        email: true,
-        photo: true,
-        phone: true,
-        role: true,
-        createdAt: true,
-        updatedAt: true
-      }
-    });
-
-    res.json(user);
+    res.json({ ...updatedUser, photo: photoUrl });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

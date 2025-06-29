@@ -25,13 +25,13 @@ export const getAllReviews = async (req, res) => {
       // Format tanggal - tambahkan 7 jam untuk WIB
       const date = new Date(review.createdAt);
       date.setHours(date.getHours() + 7);
-      
+
       const now = new Date();
       now.setHours(now.getHours() + 7);
-      
+
       const diffTime = Math.abs(now - date);
       const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-      
+
       let dateText;
       if (diffDays === 0) {
         dateText = 'Hari ini';
@@ -48,11 +48,13 @@ export const getAllReviews = async (req, res) => {
       return {
         id: review.id,
         name: review.name,
-        avatar: review.avatar || `https://randomuser.me/api/portraits/men/${review.id % 99}.jpg`,
+        avatar: review.avatar
+          ? `${process.env.BACKEND_URL || 'http://localhost:3000'}/uploads/reviews/${review.avatar}`
+          : `https://randomuser.me/api/portraits/men/${review.id % 99}.jpg`,
         rating: review.rating,
         date: dateText,
         comment: review.comment,
-        service: review.service.name, // Ambil nama layanan saja
+        service: review.service.name,
         serviceId: review.serviceId,
         createdAt: date,
         originalDate: review.createdAt,
@@ -79,7 +81,8 @@ export const getAllReviews = async (req, res) => {
 // Create new review
 export const createReview = async (req, res) => {
   try {
-    const { name, avatar, rating, comment, serviceId } = req.body;
+    const { name, rating, comment, serviceId } = req.body;
+    const avatar = req.file ? req.file.filename : null;
 
     if (!name || !rating || !comment || !serviceId) {
       return res.status(400).json({ error: 'Field required: name, rating, comment, serviceId' });
@@ -88,36 +91,14 @@ export const createReview = async (req, res) => {
     const review = await prisma.review.create({
       data: {
         name,
-        avatar: avatar || null,
+        avatar,
         rating: parseInt(rating),
         comment,
         serviceId: parseInt(serviceId)
       }
     });
 
-    // Tambahkan service data untuk response lengkap
-    const createdReview = await prisma.review.findUnique({
-      where: { id: review.id },
-      include: { service: true }
-    });
-
-    // Format untuk frontend
-    const date = new Date(createdReview.createdAt);
-    date.setHours(date.getHours() + 7);
-    
-    const formattedReview = {
-      id: createdReview.id,
-      name: createdReview.name,
-      avatar: createdReview.avatar || `https://randomuser.me/api/portraits/men/${createdReview.id % 99}.jpg`,
-      rating: createdReview.rating,
-      date: 'Baru saja',
-      comment: createdReview.comment,
-      service: createdReview.service.name,
-      serviceId: createdReview.serviceId,
-      createdAt: date
-    };
-
-    res.status(201).json(formattedReview);
+    res.status(201).json(review);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
